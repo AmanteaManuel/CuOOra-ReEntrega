@@ -144,7 +144,7 @@ UsuarioTest >> testObtenerRespuestas [
 UsuarioTest >> testSeguirUsuario [
 	| u1 |
 	u1 := Usuario newNombreUsuario: 'Manuel' contrasenia: '123'.
-	usuario agregarFollow: u1.
+	usuario seguirUsuario: u1.
 	usuario seguirUsuario: u1.
 	self assert: (1 = (usuario follows select: [ :f | f = u1] )size ).
 ]
@@ -153,7 +153,7 @@ UsuarioTest >> testSeguirUsuario [
 UsuarioTest >> testSigueAUsuario [
 	|u1|
 	u1:= Usuario newNombreUsuario: 'Manuel' contrasenia: '123'.
-	usuario agregarFollow:u1.
+	usuario seguirUsuario:u1.
 	self assert:[ usuario sigueAUsuario:u1].
 	
 ]

@@ -22,12 +22,6 @@ Usuario class >> newNombreUsuario: unNombreUsuario contrasenia: unaContrasenia [
 ]
 
 { #category : #methods }
-Usuario >> agregarFollow:user [
-	self follows add:user.
-	
-]
-
-{ #category : #methods }
 Usuario >> agregarPregunta: unaPregunta [
 	posts
 		add: unaPregunta
