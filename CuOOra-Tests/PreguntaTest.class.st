@@ -34,13 +34,12 @@ PreguntaTest >> setUp [
 
 { #category : #test }
 PreguntaTest >> testAgregarRespuesta [
-|r u|
-u:= Usuario newNombreUsuario: 'user' contrasenia:'123'. 
-
-r := Respuesta  newRespuesta: 'La solucion es...' usuario:u.
-pregunta agregarRespuesta: r.
-
-self assert: (pregunta respuestas includes:r).
+	| r u |
+	u := Usuario newNombreUsuario: 'user' contrasenia: '123'.
+	r := Respuesta newRespuesta: 'La solucion es...' usuario: u.
+	pregunta agregarRespuesta: r.
+	pregunta agregarRespuesta: r.
+	self assert: (pregunta respuestas includes: r).
 ]
 
 { #category : #test }
@@ -53,18 +52,14 @@ PreguntaTest >> testObtenerRespuestasPorPuntaje [
 	r1 darLike: u1.
 	r1 darLike: u2.
 	r2 darDislike: u1.
-	pregunta respuestas add: r1.
-	pregunta respuestas add: r2.
+	pregunta agregarRespuesta: r1.
+	pregunta agregarRespuesta: r2.
 	ord := pregunta obtenerRespuestasPorPuntaje.
 	self assert: (ord at: 1) equals: r1.
 	self assert: (ord at: 2) equals: r2
 ]
 
 { #category : #test }
-PreguntaTest >> testPerteneceATopico [
-	| t |
-	t := Topico
-		newTopico: 'Objetos'
-		descripcion: 'Preguntas sobre Objetos'.
+PreguntaTest >> testPerteneceATopico [	
 	self assert: (pregunta perteneceATopico: topico)
 ]

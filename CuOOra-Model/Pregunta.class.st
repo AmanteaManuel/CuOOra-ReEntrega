@@ -33,13 +33,11 @@ Pregunta >> cantidadRespuestas [
 
 { #category : #initialization }
 Pregunta >> initialize [
-	self
-		activo: true; 
-		fecha: Date today; 
+	self	
+		fecha: Date today;
 		hora: Time now;
-		reacciones: OrderedCollection new; 
-		respuestas: OrderedCollection new.
-		
+		reacciones: OrderedCollection new;
+		respuestas: OrderedCollection new
 ]
 
 { #category : #methods }

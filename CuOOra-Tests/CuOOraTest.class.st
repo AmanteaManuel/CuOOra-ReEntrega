@@ -56,18 +56,22 @@ CuOOraTest >> setUp [
 
 { #category : #test }
 CuOOraTest >> testAltaDislikeDe [
-	| p |
+	| p dislike |
 	p := Pregunta new.
+	dislike := sistema altaDislike: p de: usuarioLogueado.
 	sistema altaDislike: p de: usuarioLogueado.
-	self assert: p reacciones size equals: 1
+	self assert: p reacciones size equals: 1.
+	self assert: (p reacciones includes: dislike).
 ]
 
 { #category : #test }
 CuOOraTest >> testAltaLikeDe [
-	| p |
+	| p like |
 	p := sistema preguntas last.
+	like:= sistema altaLike: p de: usuarioLogueado.
 	sistema altaLike: p de: usuarioLogueado.
-	self assert: p cantLikes equals: 1
+	self assert: p reacciones size equals: 1.
+	self assert: (p reacciones includes: like)
 ]
 
 { #category : #test }
@@ -113,7 +117,9 @@ CuOOraTest >> testAltaTopicoInteresDe [
 	del usuario."
 	t := sistema topicos last.
 	sistema altaTopicoInteres: t de: usuarioLogueado.
-	self assert: (usuarioLogueado topicosDeInteres includes: t)
+	sistema altaTopicoInteres: t de: usuarioLogueado.
+	self assert: (usuarioLogueado topicosDeInteres includes: t).
+	self assert: (usuarioLogueado topicosDeInteres size) equals: 1
 ]
 
 { #category : #test }
@@ -123,14 +129,6 @@ CuOOraTest >> testAltaUsuarioContrasenia [
 	self assert: (sistema usuarios includes: u).
 	u := sistema altaUsuario:'user' contrasenia: '123'.
 	self deny: (sistema usuarios includes: u)
-]
-
-{ #category : #test }
-CuOOraTest >> testBajaPregunta [
-	| p |
-	p := sistema preguntas last.
-	sistema bajaPregunta: p.
-	self deny: p activo
 ]
 
 { #category : #test }
@@ -201,10 +199,12 @@ CuOOraTest >> testObtenerRespuestasUsuario [
 
 { #category : #test }
 CuOOraTest >> testUsuarioSeguirA [
-	|u1|
+	| u1 |
 	u1 := Usuario new.
 	sistema usuario: usuarioLogueado seguirA: u1.
-	self assert:(usuarioLogueado follows includes: u1). 
+	sistema usuario: usuarioLogueado seguirA: u1.
+	self assert: (usuarioLogueado follows includes: u1).
+	self assert: usuarioLogueado follows size equals: 1
 ]
 
 { #category : #test }

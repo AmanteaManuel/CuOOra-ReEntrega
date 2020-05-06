@@ -8,22 +8,11 @@ Class {
 		'descripcion',
 		'fecha',
 		'hora',
-		'activo',
 		'reacciones',
 		'usuario'
 	],
 	#category : #'CuOOra-Model'
 }
-
-{ #category : #accesing }
-Post >> activo [
-	^ activo.
-]
-
-{ #category : #accesing }
-Post >> activo: bool [ 
-	activo :=bool. 
-]
 
 { #category : #methods }
 Post >> cantDislikes [
@@ -96,11 +85,6 @@ Post >> hora [
 { #category : #accesing }
 Post >> hora: time [ 
 	hora:= time.
-]
-
-{ #category : #methods }
-Post >> ponerInactivo [
-	self activo: false.
 ]
 
 { #category : #accesing }

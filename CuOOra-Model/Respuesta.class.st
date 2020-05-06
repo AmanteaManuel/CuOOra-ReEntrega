@@ -20,9 +20,10 @@ Respuesta >> descripcion: descripcionStr usuario:anUser [
 
 { #category : #initialization }
 Respuesta >> initialize [
-	self
-		activo: true; fecha: Date today; hora: Time now; 
-		reacciones: OrderedCollection new.
+	self	
+		fecha: Date today;
+		hora: Time now;
+		reacciones: OrderedCollection new
 ]
 
 { #category : #methods }

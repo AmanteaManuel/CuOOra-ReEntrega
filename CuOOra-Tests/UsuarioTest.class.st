@@ -114,16 +114,16 @@ UsuarioTest >> testDiferenciaLikeDislikesRespuestas [
 
 { #category : #test }
 UsuarioTest >> testEliminarPregunta [
-|preguntaBorrar u|
-u:= Usuario newNombreUsuario: 'user' contrasenia:'123'.
+	| preguntaBorrar u |
+	u := Usuario newNombreUsuario: 'user' contrasenia: '123'.
 	preguntaBorrar := Pregunta
 		newPregunta: 'delete?'
 		descripcion: 'como se hace un delte'
 		topicos: ''
 		usuario: u.
-		usuario agregarPregunta: preguntaBorrar.		
+	usuario agregarPregunta: preguntaBorrar.
 	usuario eliminarPregunta: preguntaBorrar.
-	self assert: [ usuario posts includes: preguntaBorrar ].
+	self assert: [ usuario posts includes: preguntaBorrar ]
 ]
 
 { #category : #test }
