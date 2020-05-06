@@ -47,7 +47,7 @@ MasterComponent >> renderPregunta: pregunta canvas: aCanvas [
 				callback: [ self call: (PreguntaComponent newPregunta: pregunta) ];
 				with: pregunta titulo ].
 	aCanvas div
-		with: [ aCanvas paragraph with: 'Topicos: ' , pregunta topicosComoString ].
+		with: [ aCanvas paragraph with: 'Topicos: ' , (self topicosComoString:(pregunta topicos)) ].
 	aCanvas
 		paragraph: [ aCanvas render: 'Realizada por: '.
 			aCanvas anchor				
@@ -97,4 +97,9 @@ MasterComponent >> style [
 	font-weight: bold;
 	}
 	'
+]
+
+{ #category : #rendering }
+MasterComponent >> topicosComoString:topicosList [
+	^ (topicosList collect: [ :each | each nombre ]) asCommaString.
 ]

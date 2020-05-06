@@ -74,7 +74,7 @@ PreguntaComponent >> renderPregunta: aCanvas [
 	aCanvas heading with: pregunta titulo.
 	aCanvas paragraph with: pregunta descripcion.
 	aCanvas div
-		with: [ aCanvas paragraph with: 'Topicos: ' , pregunta topicosComoString ].
+		with: [ aCanvas paragraph with: 'Topicos: ' , (self topicosComoString:(pregunta topicos)) ].
 	aCanvas
 		paragraph: [ aCanvas text: 'Realizada por: ' , pregunta usuario nombreUsuario.
 			aCanvas anchor callback: [ pregunta usuario ] ].

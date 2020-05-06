@@ -97,8 +97,3 @@ Pregunta >> topicos [
 Pregunta >> topicos: list [
 	topicos:= list.
 ]
-
-{ #category : #methods }
-Pregunta >> topicosComoString [
-	^ (self topicos collect: [ :each | each nombre ]) asCommaString.
-]
