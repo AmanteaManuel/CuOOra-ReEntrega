@@ -86,30 +86,27 @@ UsuarioTest >> testAgregarTopicoInteres [
 
 { #category : #test }
 UsuarioTest >> testCalcularPuntaje [
-	self assert: [ 20 + 50 + 0 + (-1) = usuario calcularPuntaje ]
+	self assert: 20 + 50 + 0 + -1 equals: usuario calcularPuntaje.
 ]
 
 { #category : #test }
 UsuarioTest >> testCantidadPreguntas [
-	self assert: [ usuario cantidadPreguntas = 1 ]
+	self assert: usuario cantidadPreguntas equals: 1 
 ]
 
 { #category : #test }
 UsuarioTest >> testCantidadRespuestas [
-	self assert: [ usuario cantidadRespuestas = 1 ]
+	self assert:  usuario cantidadRespuestas equals: 1 
 ]
 
 { #category : #test }
 UsuarioTest >> testDiferenciaLikeDislikesPreguntas [
-	self assert: [usuario diferenciaLikeDislikesPreguntas = 0].
+	self assert: usuario diferenciaLikeDislikesPreguntas equals: 0
 ]
 
 { #category : #test }
 UsuarioTest >> testDiferenciaLikeDislikesRespuestas [
-	| dif |
-	dif := usuario diferenciaLikeDislikesRespuestas.
-	 self
-		assert: [ dif = -1 ]
+	self assert: usuario diferenciaLikeDislikesRespuestas equals: -1 
 ]
 
 { #category : #test }
@@ -130,7 +127,7 @@ UsuarioTest >> testEliminarPregunta [
 UsuarioTest >> testObtenerPreguntas [
 	| list |
 	list := usuario obtenerPreguntas.
-	self assert: [ list size = 1 ]
+	self assert:  list size equals: 1 
 ]
 
 { #category : #test }
