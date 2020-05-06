@@ -13,9 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 Topico class >> newTopico:nombreStr descripcion:descripcionStr [
-	^ self new
-		nombre: nombreStr; 
-		descripcion: descripcionStr.
+	^ self new nombre: nombreStr descripcion: descripcionStr.
 ]
 
 { #category : #accesing }
@@ -44,4 +42,10 @@ Topico >> nombre [
 Topico >> nombre:unNombreStr [
 	nombre:= unNombreStr.
 	
+]
+
+{ #category : #initialization }
+Topico >> nombre: nombreStr descripcion: descripcionStr [
+	nombre := nombreStr.
+	descripcion := descripcionStr.
 ]

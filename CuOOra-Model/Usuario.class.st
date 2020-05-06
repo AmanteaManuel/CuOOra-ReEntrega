@@ -17,8 +17,7 @@ Class {
 
 { #category : #'instance creation' }
 Usuario class >> newNombreUsuario: unNombreUsuario contrasenia: unaContrasenia [ 
-   ^(self new
-	nombreUsuario: unNombreUsuario; contrasenia: unaContrasenia).
+   ^self new nombreUsuario: unNombreUsuario contrasenia: unaContrasenia.
 ]
 
 { #category : #methods }
@@ -118,6 +117,12 @@ Usuario >> nombreUsuario [
 { #category : #accessing }
 Usuario >> nombreUsuario: anObject [
 	nombreUsuario := anObject
+]
+
+{ #category : #initialization }
+Usuario >> nombreUsuario: unNombreUsuario contrasenia: unaContrasenia [
+	nombreUsuario := unNombreUsuario.
+	contrasenia := unaContrasenia.
 ]
 
 { #category : #methods }
