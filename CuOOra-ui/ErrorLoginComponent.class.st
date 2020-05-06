@@ -19,6 +19,5 @@ ErrorLoginComponent >> renderBody: aCanvas [
 
 { #category : #accessing }
 ErrorLoginComponent >> renderContentOn: aCanvas [
-	self renderHeader: aCanvas.
-	self renderBody: aCanvas
+	super renderContentOn: aCanvas.
 ]

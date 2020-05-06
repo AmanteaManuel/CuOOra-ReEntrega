@@ -99,10 +99,6 @@ AccessGrantingComponent >> renderContentOn: aCanvas [
 ]
 
 { #category : #rendering }
-AccessGrantingComponent >> renderErrorPage:aCanvas [
-]
-
-{ #category : #rendering }
 AccessGrantingComponent >> renderHeader: aCanvas [	
 	aCanvas div id:'titulo'; with: [ 		aCanvas heading with: 'CuOOra'.
 	].
