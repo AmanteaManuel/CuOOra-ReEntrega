@@ -59,7 +59,7 @@ CuOOraTest >> testAltaDislikeDe [
 	| p |
 	p := Pregunta new.
 	sistema altaDislike: p de: usuarioLogueado.
-	self assert: (p reacciones size = 1)
+	self assert: p reacciones size equals: 1
 ]
 
 { #category : #test }
@@ -96,13 +96,14 @@ CuOOraTest >> testAltaRespuestaPreguntaUsuario [
 
 { #category : #test }
 CuOOraTest >> testAltaTopicoDescripcion [
-	| t topicosRepetidos|
+	| t topicosRepetidos |
 	t := sistema altaTopico: 'Programacion' descripcion: 'prueba'.
 	self assert: (sistema topicos includes: t).
 	"Pruebo con un topico que ya exista."
 	t := sistema altaTopico: 'POO' descripcion: 'Prueba'.
-	topicosRepetidos:= (sistema topicos select: [  :topic | topic nombre = 'POO' ]) size.
-	self deny: (topicosRepetidos = 2).
+	topicosRepetidos := (sistema topicos
+		select: [ :topic | topic nombre = 'POO' ]) size.
+	self deny: topicosRepetidos equals: 2
 ]
 
 { #category : #test }
@@ -188,14 +189,14 @@ CuOOraTest >> testObtenerPreguntasRelevantesUsuario [
 
 { #category : #test }
 CuOOraTest >> testObtenerPreguntasUsuario [
-	self assert: [ (sistema obtenerRespuestasUsuario: usuarioLogueado)
-		size = 1 ]
+	self
+		assert: (sistema obtenerRespuestasUsuario: usuarioLogueado) size equals:1
 ]
 
 { #category : #test }
 CuOOraTest >> testObtenerRespuestasUsuario [
-	self assert: [ (sistema obtenerRespuestasUsuario: usuarioLogueado)
-		size = 1 ]
+	self
+		assert: (sistema obtenerRespuestasUsuario: usuarioLogueado) size equals: 1
 ]
 
 { #category : #test }

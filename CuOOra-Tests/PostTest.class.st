@@ -27,15 +27,14 @@ PostTest >> setUp [
 
 { #category : #test }
 PostTest >> testDiferenciaLikesDislikes [
-|u1 u2 u3|
-u1 := Usuario new.
-u2 := Usuario new.
-u3 := Usuario new.
-u1 darLike: pregunta.
-u2 darLike: pregunta.
-u3 darDislike: pregunta.
-self assert:(pregunta diferenciaLikesDislikes=1)
-	
+	| u1 u2 u3 |
+	u1 := Usuario new.
+	u2 := Usuario new.
+	u3 := Usuario new.
+	u1 darLike: pregunta.
+	u2 darLike: pregunta.
+	u3 darDislike: pregunta.
+	self assert: pregunta diferenciaLikesDislikes equals: 1
 ]
 
 { #category : #test }
