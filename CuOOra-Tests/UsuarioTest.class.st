@@ -135,9 +135,9 @@ UsuarioTest >> testObtenerPreguntas [
 
 { #category : #test }
 UsuarioTest >> testObtenerRespuestas [
-	|list|
-	list:= usuario obtenerRespuestas.
-	self assert: [list size = 1].
+	| list |
+	list := usuario obtenerRespuestas.
+	self assert:  list size equals: 1 
 ]
 
 { #category : #test }
@@ -146,7 +146,7 @@ UsuarioTest >> testSeguirUsuario [
 	u1 := Usuario newNombreUsuario: 'Manuel' contrasenia: '123'.
 	usuario seguirUsuario: u1.
 	usuario seguirUsuario: u1.
-	self assert: (1 = (usuario follows select: [ :f | f = u1] )size ).
+	self assert: 1 equals: (usuario follows select: [ :f | f = u1 ]) size
 ]
 
 { #category : #test }

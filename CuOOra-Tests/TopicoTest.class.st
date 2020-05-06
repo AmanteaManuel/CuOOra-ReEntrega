@@ -19,6 +19,6 @@ TopicoTest >> setUp [
 
 { #category : #test }
 TopicoTest >> testExisteNombre [
-
 	self assert: (topico existeNombre: 'POO').
+	self deny: (topico existeNombre: 'AAA')
 ]

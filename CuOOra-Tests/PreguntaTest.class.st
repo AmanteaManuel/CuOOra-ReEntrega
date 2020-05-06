@@ -45,7 +45,7 @@ self assert: (pregunta respuestas includes:r).
 
 { #category : #test }
 PreguntaTest >> testObtenerRespuestasPorPuntaje [
-	| r1 r2 u1 u2 list ord |
+	| r1 r2 u1 u2 ord |
 	r1 := Respuesta new.
 	r2 := Respuesta new.
 	u1 := Usuario new.
@@ -53,11 +53,11 @@ PreguntaTest >> testObtenerRespuestasPorPuntaje [
 	r1 darLike: u1.
 	r1 darLike: u2.
 	r2 darDislike: u1.
-	pregunta respuestas  add: r1.
-	pregunta respuestas  add: r2.
+	pregunta respuestas add: r1.
+	pregunta respuestas add: r2.
 	ord := pregunta obtenerRespuestasPorPuntaje.
-	self assert: (ord at: 1) = r1.
-	self assert: (ord at: 2) = r2
+	self assert: (ord at: 1) equals: r1.
+	self assert: (ord at: 2) equals: r2
 ]
 
 { #category : #test }
