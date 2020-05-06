@@ -13,17 +13,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-Pregunta class >> newPregunta:tituloStr descripcion:descripcionStr topicos:topicosList [
-	^ self new	
-		titulo: tituloStr; descripcion: descripcionStr; topicos: topicosList.
-]
-
-{ #category : #'instance creation' }
 Pregunta class >> newPregunta: tituloStr descripcion: descripcionStr topicos: topicosList usuario:anUser [
-	^ self new
-		titulo: tituloStr;
-		descripcion: descripcionStr;
-		topicos: topicosList;
+	^ self new titulo: tituloStr
+		descripcion: descripcionStr
+		topicos: topicosList
 		usuario:anUser.
 ]
 
@@ -86,6 +79,14 @@ Pregunta >> titulo [
 { #category : #accesing }
 Pregunta >> titulo:unString [
 	titulo := unString.
+]
+
+{ #category : #accesing }
+Pregunta >> titulo: tituloStr	descripcion: descripcionStr	topicos: topicosList	usuario:anUser [
+titulo := tituloStr.
+descripcion:= descripcionStr.
+topicos:= topicosList.
+usuario:=anUser.
 ]
 
 { #category : #accesing }
