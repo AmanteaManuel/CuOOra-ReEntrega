@@ -13,45 +13,55 @@ Class {
 
 { #category : #running }
 CuOOraTest >> setUp [
-	| usuario pregunta t1 t2 t3 tList respuesta u |
-	u:= Usuario newNombreUsuario: 'user' contrasenia:'123'.
+	| usuario pregunta t1 t2 t3 tList u |	
+	u := Usuario newNombreUsuario: 'user' contrasenia: '123'.
 	sistema := CuOOra new.
 	tList := OrderedCollection new.
+
 	"Agrego usuarios al sistema"
-	usuario := Usuario newNombreUsuario: 'user' contrasenia: '123'.
-	sistema usuarios add: usuario.
+	usuario := sistema altaUsuario: 'user' contrasenia: '123'.
 	usuarioLogueado := usuario.
-	
+
 	"-----------------------------------------------------------"
 	"Agrego topicos"
-	t1 := Topico newTopico: 'SQL' descripcion: 'prueba'.
-	sistema topicos add: t1.
-	t2 := Topico newTopico: 'Smalltalk' descripcion: 'prueba'.
-	sistema topicos add: t2.
-	t3 := Topico newTopico: 'POO' descripcion: 'prueba'.
-	sistema topicos add: t3.
-	tList add: t1.
-	tList add: t2.
+	t1 := sistema altaTopico: 'SQL' descripcion: 'Prueba'.
+	t2 := sistema altaTopico: 'Smalltalk' descripcion: 'Prueba'.
+	t3 := sistema altaTopico: 'POO' descripcion: 'Prueba'.
+	tList
+		add: t1;
+		add: t2;
+		add: t3.
 	"-----------------------------------------------------------"
-	pregunta := Pregunta
-		newPregunta: 'select?'
+	sistema
+		altaPregunta: 'select?'
 		descripcion: 'como se hace un select'
 		topicos: tList
-		usuario:u.
-	sistema preguntas add: pregunta.
-	usuarioLogueado posts add: pregunta.
-	pregunta := Pregunta
-		newPregunta: 'OrderedCollection?'
+		usuario: u.
+	sistema
+		altaPregunta: 'select??'
+		descripcion: 'como se hace un select'
+		topicos: tList
+		usuario: u.
+	sistema
+		altaPregunta: 'OrderedCollection?'
 		descripcion: 'como creo una instancia?'
 		topicos: tList
-		usuario:u.
-	sistema preguntas add: pregunta.
-	"-----------------------------------------------------------"
-	respuesta := Respuesta
-		newRespuesta: 'La respuesta es...'
+		usuario: u.
+	pregunta := sistema
+		altaPregunta: 'OrderedCollection?'
+		descripcion: 'como creo una instancia?'
+		topicos: tList
+		usuario: u.
+	sistema
+		altaPregunta: 'prueba?'
+		descripcion: 'preuba?'
+		topicos: tList
 		usuario: usuarioLogueado.
-	pregunta respuestas add: respuesta.
-	usuarioLogueado posts add: respuesta
+	"-----------------------------------------------------------"
+	sistema
+		altaRespuesta: 'La respuesta es...'
+		pregunta: pregunta
+		usuario: usuarioLogueado
 ]
 
 { #category : #test }
@@ -188,7 +198,8 @@ CuOOraTest >> testObtenerPreguntasRelevantesUsuario [
 { #category : #test }
 CuOOraTest >> testObtenerPreguntasUsuario [
 	self
-		assert: (sistema obtenerRespuestasUsuario: usuarioLogueado) size equals:1
+		assert: (sistema obtenerPreguntasUsuario: usuarioLogueado) size
+		equals: 1
 ]
 
 { #category : #test }
