@@ -90,9 +90,8 @@ Usuario >> diferenciaLikeDislikesRespuestas [
 
 { #category : #methods }
 Usuario >> eliminarPregunta: unaPregunta [
-	"hace baja logica de una pregunta determinada"
 
-	^ self obtenerPreguntas remove: unaPregunta.
+self obtenerPreguntas remove: unaPregunta
 ]
 
 { #category : #accessing }
