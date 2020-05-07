@@ -13,48 +13,44 @@ Class {
 
 { #category : #running }
 UsuarioTest >> setUp [
-	| topicos t like dislike p r u1 u2 u3 u4 |
+	| topicos t p r u1 u2 u3 u4 |
 	t := Topico newTopico: 'SQL' descripcion: 'topico sql'.
 	topicos := OrderedCollection new.
 	topicos add: t.
 	u1 := Usuario newNombreUsuario: 'user' contrasenia: '123'.
 	u2 := Usuario newNombreUsuario: 'user2' contrasenia: '123'.
 	u3 := Usuario newNombreUsuario: 'user3' contrasenia: '123'.
-	u1 topicosDeInteres add: t.
+	"u4 := Usuario newNombreUsuario: 'user4' contrasenia: '123'."
+	u1 agregarTopicoInteres: t.
 	top := t.
 	"---------------------------------------------------------"
 	p := Pregunta
 		newPregunta: 'select?'
 		descripcion: 'como se hace un select'
 		topicos: topicos
-		usuario:u4.
-	u4:= Usuario newNombreUsuario: 'uu1' contrasenia:'123'.
-	r := Respuesta newRespuesta: 'esta mal escrito el metodo' usuario:u4.
+		usuario: u1.
+	u4 := Usuario newNombreUsuario: 'uu1' contrasenia: '123'.
+	r := Respuesta newRespuesta: 'esta mal escrito el metodo' usuario: u4.
 	"---------------------------------------------------------"
-	like := Like newLike: u2.
-	p reacciones add: like.
-	dislike := Dislike newDislike: u3.
-	p reacciones add: dislike.
-	dislike := Dislike newDislike: u3.
-	r reacciones add: dislike.
-	u1 posts add: p.
-	u1 posts add: r.
+	p darLike: u2.
+	p darDislike: u3.
+	r darDislike: u3.
+	u1 agregarPregunta: p.
+	u1 agregarPregunta: r.
 	usuario := u1
 ]
 
 { #category : #test }
 UsuarioTest >> testAgregarPregunta [
-	| preg u|
-	u:= Usuario newNombreUsuario: 'user' contrasenia:'123'.
-	preg := usuario posts
-		add:
-			(Pregunta
-				newPregunta: 'select?'
-				descripcion: 'como se hace un select'
-				topicos: 'SQL'
-				usuario:u).
+	| u preg |
+	u := Usuario newNombreUsuario: 'user' contrasenia: '123'.
+	preg := Pregunta
+		newPregunta: 'select?'
+		descripcion: 'como se hace un select'
+		topicos: 'SQL'
+		usuario: u.
 	usuario agregarPregunta: preg.
-	self assert: (usuario posts includes: preg)
+	self assert: (usuario posts includes: preg).
 ]
 
 { #category : #test }
@@ -144,17 +140,21 @@ UsuarioTest >> testDiferenciaLikeDislikesRespuestas [
 
 { #category : #test }
 UsuarioTest >> testEliminarPregunta [
-|preguntaBorrar p|
-"u:= Usuario newNombreUsuario: 'user' contrasenia:'123'."
-preguntaBorrar := Pregunta
+	| u preguntaBorrar p tamaño |
+	u := Usuario newNombreUsuario: 'pruebaBorrado' contrasenia: '123'.
+	preguntaBorrar := Pregunta
 		newPregunta: 'delete?'
 		descripcion: 'como se hace un delete'
 		topicos: ''
-		usuario: usuario.
-usuario agregarPregunta: preguntaBorrar.		
-p := (usuario eliminarPregunta: preguntaBorrar).
-self deny: [ usuario obtenerPreguntas includes: p ]. 
-self assert: [  ].
+		usuario: u.
+	u agregarPregunta: preguntaBorrar.
+	p := u eliminarPregunta: preguntaBorrar.
+	self deny: [ u obtenerPreguntas includes: p ].
+	
+	"borro una pregunta que no existe"
+	tamaño := u obtenerPreguntas size.
+	u eliminarPregunta: preguntaBorrar.
+	self assert: u obtenerPreguntas size equals: tamaño
 ]
 
 { #category : #test }
