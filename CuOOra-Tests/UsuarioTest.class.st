@@ -81,7 +81,45 @@ UsuarioTest >> testAgregarTopicoInteres [
 
 { #category : #test }
 UsuarioTest >> testCalcularPuntaje [
-	self assert: 20 + 50 + 0 + -1 equals: usuario calcularPuntaje.
+	| u1 u2 u3 u4 p1 p2 p3 r |
+	u1 := Usuario
+		newNombreUsuario: 'usuarioSinPregNiResp'
+		contrasenia: 'xxxx'.
+	u2 := Usuario
+		newNombreUsuario: 'usuarioConUnaPreg'
+		contrasenia: 'xxxx'.
+	u3 := Usuario
+		newNombreUsuario: 'usuarioConUnaPregUnaResp'
+		contrasenia: 'xxxx'.
+	u4 := Usuario
+		newNombreUsuario: 'usuarioPregRespLike'
+		contrasenia: 'xxxx'.
+	p1 := Pregunta
+		newPregunta: 'xxxx'
+		descripcion: 'xxxx'
+		topicos: 'xxxx'
+		usuario: u2.
+	p2 := Pregunta
+		newPregunta: 'xxxx'
+		descripcion: 'xxxx'
+		topicos: 'xxxx'
+		usuario: u3.
+	p3 := Pregunta
+		newPregunta: 'xxxx'
+		descripcion: 'xxxx'
+		topicos: 'xxxx'
+		usuario: u4.
+	r := Respuesta newRespuesta: 'xxxx' usuario: u2.
+	u2 agregarPregunta: p1.
+	u3 agregarPregunta: p2.
+	u3 agregarRespuesta: r.
+	u4 agregarPregunta: p3.
+	u4 agregarRespuesta: r.
+	u1 darLike: p3.
+	"self assert: u1 calcularPuntaje equals: 0."
+"	self assert: u2 calcularPuntaje equals: 20."
+	self assert: u3 calcularPuntaje equals: 70.
+	self assert: u4 calcularPuntaje equals: 71
 ]
 
 { #category : #test }
