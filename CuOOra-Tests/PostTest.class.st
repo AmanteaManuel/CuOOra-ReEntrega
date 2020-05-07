@@ -39,18 +39,16 @@ PostTest >> testDiferenciaLikesDislikes [
 
 { #category : #test }
 PostTest >> testTieneDislikeDe [
-|u like|
-	u:= Usuario newNombreUsuario: 'Juan' contrasenia:'Amantea'. 
-	like:= Dislike newDislike: u.
-	pregunta reacciones add: like.
-	self assert:[pregunta tieneDislikeDe: u].
+	| u |
+	u := Usuario newNombreUsuario: 'Juan' contrasenia: 'Amantea'.	
+	pregunta darDislike:u.	
+	self assert: [ pregunta tieneDislikeDe: u ]
 ]
 
 { #category : #test }
 PostTest >> testTieneLikeDe [
-|u like|
-	u:= Usuario newNombreUsuario: 'Juan' contrasenia:'Amantea'. 
-	like:= Like newLike: u.
-	pregunta reacciones add: like.
-	self assert:[pregunta tieneLikeDe: u].
+	| u |
+	u := Usuario newNombreUsuario: 'Juan' contrasenia: 'Amantea'.
+	pregunta darLike: u.
+	self assert: [ pregunta tieneLikeDe: u ]
 ]

@@ -88,11 +88,6 @@ CuOOra >> altaUsuario: nombreStr contrasenia: contraseniaStr [
 ]
 
 { #category : #methods }
-CuOOra >> bajaPregunta: unaPregunta [
-	unaPregunta ponerInactivo.
-]
-
-{ #category : #methods }
 CuOOra >> calcularPuntajeUsuario:unUsuario [
 	^ (unUsuario calcularPuntaje).
 ]
