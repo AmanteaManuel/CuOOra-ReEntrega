@@ -59,9 +59,9 @@ UsuarioTest >> testAgregarPregunta [
 
 { #category : #test }
 UsuarioTest >> testAgregarRespuesta [
-	| resp u|
+	| resp u |
 	u:= Usuario newNombreUsuario: 'user' contrasenia:'123'.
-	resp := usuario posts add: (Respuesta newRespuesta: 'te falta el ;' usuario:u).
+	resp := Respuesta newRespuesta: 'te falta el ;' usuario: u.
 	usuario agregarRespuesta: resp.
 	self assert: (usuario posts includes: resp)
 ]
@@ -74,14 +74,9 @@ UsuarioTest >> testAgregarTopicoInteres [
 		descripcion: 'topico Base de datos'.
 	topicoFail := top.
 	usuario agregarTopicoInteres: topico.
-	self
-		assert: [ (usuario topicosDeInteres select: [ :t | t nombre = 'Base de datos' ])
-				size = 1 ].
-	usuario agregarTopicoInteres: topicoFail
-	"self
-		deny:
-			[ (usuario topicosInteres select: [ :t | t nombre = 'SQL' ]) size = 2 ]"
-	"PREGUNTAR DENY NO ANDA"
+	self assert: (usuario topicosDeInteres select: [ :t | t nombre = 'Base de datos' ] )size equals: 1 .
+	usuario agregarTopicoInteres: topicoFail.
+	self assert: (usuario topicosDeInteres select: [ :t | t nombre = 'SQL' ] ) size equals: 1.
 ]
 
 { #category : #test }
@@ -111,16 +106,17 @@ UsuarioTest >> testDiferenciaLikeDislikesRespuestas [
 
 { #category : #test }
 UsuarioTest >> testEliminarPregunta [
-|preguntaBorrar u|
-u:= Usuario newNombreUsuario: 'user' contrasenia:'123'.
+|preguntaBorrar p|
+"u:= Usuario newNombreUsuario: 'user' contrasenia:'123'."
 preguntaBorrar := Pregunta
 		newPregunta: 'delete?'
-		descripcion: 'como se hace un delte'
+		descripcion: 'como se hace un delete'
 		topicos: ''
-		usuario: u.
-		usuario agregarPregunta: preguntaBorrar.		
-	usuario eliminarPregunta: preguntaBorrar.
-	self assert: [ usuario posts includes: preguntaBorrar ]. 
+		usuario: usuario.
+usuario agregarPregunta: preguntaBorrar.		
+p := (usuario eliminarPregunta: preguntaBorrar).
+self deny: [ usuario obtenerPreguntas includes: p ]. 
+self assert: [  ].
 ]
 
 { #category : #test }
@@ -148,9 +144,10 @@ UsuarioTest >> testSeguirUsuario [
 
 { #category : #test }
 UsuarioTest >> testSigueAUsuario [
-	|u1|
+	|u1 u2|
 	u1:= Usuario newNombreUsuario: 'Manuel' contrasenia: '123'.
-	usuario seguirUsuario:u1.
-	self assert:[ usuario sigueAUsuario:u1].
-	
+	u2 := Usuario newNombreUsuario: 'NoSeguir' contrasenia: 'NoSeguir'. 
+	usuario seguirUsuario: u1.
+	self assert: [usuario sigueAUsuario: u1].
+	self deny: [usuario sigueAUsuario: u2].
 ]

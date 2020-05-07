@@ -39,8 +39,7 @@ Usuario >> agregarTopicoInteres: unTopico [
 
 { #category : #methods }
 Usuario >> calcularPuntaje [
-	^ self cantidadPreguntas  * 20
-		+ (self cantidadRespuestas * 50)
+	^ self cantidadPreguntas * 20 + (self obtenerMisRespuestas size * 50)
 		+ self diferenciaLikeDislikesPreguntas
 		+ self diferenciaLikeDislikesRespuestas
 ]
@@ -93,7 +92,7 @@ Usuario >> diferenciaLikeDislikesRespuestas [
 Usuario >> eliminarPregunta: unaPregunta [
 	"hace baja logica de una pregunta determinada"
 
-	self obtenerPreguntas remove: unaPregunta.
+	^ self obtenerPreguntas remove: unaPregunta.
 ]
 
 { #category : #accessing }
@@ -123,6 +122,23 @@ Usuario >> nombreUsuario: anObject [
 Usuario >> nombreUsuario: unNombreUsuario contrasenia: unaContrasenia [
 	nombreUsuario := unNombreUsuario.
 	contrasenia := unaContrasenia.
+]
+
+{ #category : #methods }
+Usuario >> obtenerMisRespuestas [
+	| misRespuestas misRepuestasAMisPreguntas |
+	"Obtengo todas mis repuestas"
+	misRespuestas := self obtenerRespuestas.
+	"Obtengo todas mis resuestas a mis preguntas"
+	misRepuestasAMisPreguntas := self obtenerPreguntas
+		do:
+			[ :p | p respuestas select: [ :rta | rta usuario equals: self ] ].
+	"Elimina las respuestas repetidas en ambas colecciones"
+	misRepuestasAMisPreguntas
+		do: [ :miRta | 
+			(misRespuestas includes: miRta)
+				ifTrue: [ misRespuestas remove: miRta ] ].
+	^ misRespuestas
 ]
 
 { #category : #methods }
