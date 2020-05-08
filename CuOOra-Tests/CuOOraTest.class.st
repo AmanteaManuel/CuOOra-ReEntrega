@@ -13,7 +13,7 @@ Class {
 
 { #category : #running }
 CuOOraTest >> setUp [
-	| usuario pregunta t1 t2 t3 tList u |	
+	| usuario pregunta t1 t2 t3 tList u |
 	u := Usuario newNombreUsuario: 'user' contrasenia: '123'.
 	sistema := CuOOra new.
 	tList := OrderedCollection new.
@@ -47,16 +47,18 @@ CuOOraTest >> setUp [
 		descripcion: 'como creo una instancia?'
 		topicos: tList
 		usuario: u.
-	pregunta := sistema
+	sistema
 		altaPregunta: 'OrderedCollection?'
 		descripcion: 'como creo una instancia?'
 		topicos: tList
 		usuario: u.
+	pregunta := sistema preguntas last.
 	sistema
 		altaPregunta: 'prueba?'
 		descripcion: 'preuba?'
 		topicos: tList
 		usuario: usuarioLogueado.
+	
 	"-----------------------------------------------------------"
 	sistema
 		altaRespuesta: 'La respuesta es...'
@@ -142,10 +144,39 @@ CuOOraTest >> testAltaUsuarioContrasenia [
 ]
 
 { #category : #test }
-CuOOraTest >> testCalcularPuntajeUsuario [
-	| p |
-	p := sistema calcularPuntajeUsuario: usuarioLogueado.
-	self assert: p equals: 20 * 1 + (50 * 1)
+CuOOraTest >> testCalcularPuntaje [
+	| u2 u3 u4 p2 |
+	u2 := Usuario newNombreUsuario: 'u2' contrasenia: '123'.
+	u3 := Usuario newNombreUsuario: 'conUnaPregunta' contrasenia: '123'.
+	u4 := Usuario
+		newNombreUsuario: 'conUnaPreguntaUnaRespuesta'
+		contrasenia: '123'.
+	sistema
+		altaPregunta: 'prueba1'
+		descripcion: 'prueba1'
+		topicos: OrderedCollection new
+		usuario: u3.
+	p2 := sistema
+		altaPregunta: 'prueba2'
+		descripcion: 'prueba2'
+		topicos: OrderedCollection new
+		usuario: u4.
+	sistema altaRespuesta: 'asdasd' pregunta: p2 usuario: u4.
+	sistema altaLike: p2 de: usuarioLogueado.
+	sistema altaDislike: p2 de: u2.
+	sistema altaDislike: p2 de: u3.
+
+	"usuario2 no tiene preguntas ni respuestas.Puntaje: 0"
+	self assert: (sistema calcularPuntaje: u2) equals: 0.
+
+	"u3 tiene una pregunta. Puntaje: 20"
+	self assert: (sistema calcularPuntaje: u3) equals: 20.
+
+	"usuario tiene una pregunta, una respuesta, un like y dos dislikes. Puntaje: 69 "
+	self assert: (sistema calcularPuntaje: u4) equals: 69.
+
+	"u4 tiene una pregunta y una respuesta. Puntaje: 70."
+	self assert: (sistema calcularPuntaje: usuarioLogueado) equals: 70
 ]
 
 { #category : #test }
@@ -204,8 +235,9 @@ CuOOraTest >> testObtenerPreguntasUsuario [
 
 { #category : #test }
 CuOOraTest >> testObtenerRespuestasUsuario [
-	self
-		assert: (sistema obtenerRespuestasUsuario: usuarioLogueado) size equals: 1
+	| list |
+	list := sistema obtenerRespuestasUsuario:usuarioLogueado .
+	self assert: list size equals: 1
 ]
 
 { #category : #test }

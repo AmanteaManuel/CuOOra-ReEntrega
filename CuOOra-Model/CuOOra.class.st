@@ -56,7 +56,7 @@ CuOOra >> altaRespuesta: descripcionStr pregunta: preguntaObj usuario: anUser [
 	r := Respuesta newRespuesta: descripcionStr usuario: anUser.
 	preguntaObj agregarRespuesta: r.
 	^ r
-	"DEBERIAMOS DE AGREGARO LOS OBJETOS CAMBIADOS A LA LISTA OTRA VEZ????"
+
 ]
 
 { #category : #methods }
@@ -88,8 +88,21 @@ CuOOra >> altaUsuario: nombreStr contrasenia: contraseniaStr [
 ]
 
 { #category : #methods }
-CuOOra >> calcularPuntajeUsuario:unUsuario [
-	^ (unUsuario calcularPuntaje).
+CuOOra >> calcularPuntaje: unUsuario [
+	^ unUsuario cantidadPreguntas * 20
+		+ ((self obtenerRespuestasAPreguntasAjenasUsuario: unUsuario) size * 50)
+		+ (unUsuario diferenciaLikeDislikesPreguntas)
+		+ (self diferenciaLikeDislikesRespuestas: unUsuario)
+]
+
+{ #category : #methods }
+CuOOra >> diferenciaLikeDislikesRespuestas:unUsuario [
+	| respuestas |
+	respuestas := self obtenerRespuestasUsuario: unUsuario.
+	respuestas
+		ifNotEmpty:
+			[ ^ respuestas sum: [ :respuesta | respuesta diferenciaLikesDislikes ] ]
+		ifEmpty: [ ^ 0 ]
 ]
 
 { #category : #methods }
@@ -138,8 +151,32 @@ CuOOra >> obtenerPreguntasUsuario: unUsuario [
 ]
 
 { #category : #methods }
+CuOOra >> obtenerRespuestasAPreguntasAjenasUsuario: unUsuario [
+	| misRespuestas misRepuestasAMisPreguntas |
+	"Obtengo todas mis repuestas"
+	misRespuestas := self obtenerRespuestasUsuario: unUsuario.
+	"Obtengo todas mis resuestas a mis preguntas"
+	misRepuestasAMisPreguntas := (self obtenerPreguntasUsuario: unUsuario)
+		do: [ :p | p respuestas select: [ :rta | rta usuario = unUsuario ] ].
+	"Elimina las respuestas repetidas en ambas colecciones"
+	misRepuestasAMisPreguntas
+		do: [ :miRta | 
+			(misRespuestas includes: miRta)
+				ifTrue: [ misRespuestas remove: miRta ] ].
+	^ misRespuestas
+]
+
+{ #category : #methods }
 CuOOra >> obtenerRespuestasUsuario: unUsuario [
-	^ (unUsuario obtenerRespuestas)
+	| respuestas |
+	respuestas := OrderedCollection new.
+	preguntas
+		do: [ :pregunta | 
+			pregunta respuestas
+				do: [ :respuesta | 
+					respuesta usuario = unUsuario 
+						ifTrue: [ respuestas add: respuesta ] ] ].
+	^ respuestas
 ]
 
 { #category : #accessing }

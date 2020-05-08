@@ -31,12 +31,6 @@ Pregunta >> cantidadRespuestas [
 	^(self respuestas size).
 ]
 
-{ #category : #accesing }
-Pregunta >> cantidadRespuestasAjenas [
-
-	^(self respuestas reject: [:r | r usuario equals: usuario]).
-]
-
 { #category : #initialization }
 Pregunta >> initialize [
 	self	

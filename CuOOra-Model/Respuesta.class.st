@@ -26,6 +26,11 @@ Respuesta >> initialize [
 		reacciones: OrderedCollection new
 ]
 
+{ #category : #initialization }
+Respuesta >> ok [ 
+^true.
+]
+
 { #category : #methods }
 Respuesta >> soyPregunta [
 	^false.

@@ -14,7 +14,7 @@ Class {
 
 { #category : #running }
 UsuarioTest >> setUp [
-	| topicos t p r u1 u2 u3 u4 |
+	| topicos t p u1 u2 u3 |
 	t := Topico newTopico: 'SQL' descripcion: 'topico sql'.
 	topicos := OrderedCollection new.
 	topicos add: t.
@@ -29,16 +29,13 @@ UsuarioTest >> setUp [
 		descripcion: 'como se hace un select'
 		topicos: topicos
 		usuario: u1.
-	u4 := Usuario newNombreUsuario: 'uu1' contrasenia: '123'.
-	r := Respuesta newRespuesta: 'esta mal escrito el metodo' usuario: u4.
+	
 	"---------------------------------------------------------"
 	p darLike: u2.
 	p darDislike: u3.
-	r darDislike: u3.
 	u1 agregarPregunta: p.
-	u1 agregarRespuesta: r.
 	usuario := u1.
-	usuario2 := u3.
+	usuario2 := u3
 ]
 
 { #category : #test }
@@ -55,15 +52,6 @@ UsuarioTest >> testAgregarPregunta [
 ]
 
 { #category : #test }
-UsuarioTest >> testAgregarRespuesta [
-	| resp u |
-	u:= Usuario newNombreUsuario: 'user' contrasenia:'123'.
-	resp := Respuesta newRespuesta: 'te falta el ;' usuario: u.
-	usuario agregarRespuesta: resp.
-	self assert: (usuario posts includes: resp)
-]
-
-{ #category : #test }
 UsuarioTest >> testAgregarTopicoInteres [
 	| topico topicoFail |
 	topico := Topico
@@ -77,54 +65,13 @@ UsuarioTest >> testAgregarTopicoInteres [
 ]
 
 { #category : #test }
-UsuarioTest >> testCalcularPuntaje [
-	| u3 u4 p1 p2 r |
-	u3 := Usuario newNombreUsuario: 'conUnaPregunta' contrasenia: '123'.
-	u4 := Usuario
-		newNombreUsuario: 'conUnaPreguntaUnaRespuesta'
-		contrasenia: '123'.
-	p1 := Pregunta
-		newPregunta: 'prueba1'
-		descripcion: 'prueba1'
-		topicos: ''
-		usuario: u3.
-	p2 := Pregunta
-		newPregunta: 'prueba2'
-		descripcion: 'prueba2'
-		topicos: ''
-		usuario: u4.
-	r := Respuesta newRespuesta: 'prueba' usuario: u4.
-	u3 agregarPregunta: p1.
-	u4 agregarPregunta: p2.
-	u4 agregarRespuesta: r.
-		"usuario2 no tiene preguntas ni respuestas.Puntaje: 0"
-	self assert: usuario2 calcularPuntaje equals: 0.
-		"u3 tiene una pregunta. Puntaje: 20"
-	self assert: u3 calcularPuntaje equals: 20.
-		"usuario tiene una pregunta, una respuesta, un like y dos dislikes. Puntaje: 69 "
-	self assert: usuario calcularPuntaje equals: 69.
-		"u4 tiene una pregunta y una respuesta. Puntaje: 70."
-	self assert: u4 calcularPuntaje equals: 70
-]
-
-{ #category : #test }
 UsuarioTest >> testCantidadPreguntas [
 	self assert: usuario cantidadPreguntas equals: 1 
 ]
 
 { #category : #test }
-UsuarioTest >> testCantidadRespuestas [
-	self assert:  usuario cantidadRespuestas equals: 1 
-]
-
-{ #category : #test }
 UsuarioTest >> testDiferenciaLikeDislikesPreguntas [
 	self assert: usuario diferenciaLikeDislikesPreguntas equals: 0
-]
-
-{ #category : #test }
-UsuarioTest >> testDiferenciaLikeDislikesRespuestas [
-	self assert: usuario diferenciaLikeDislikesRespuestas equals: -1 
 ]
 
 { #category : #test }
@@ -150,13 +97,6 @@ UsuarioTest >> testEliminarPregunta [
 UsuarioTest >> testObtenerPreguntas [
 	| list |
 	list := usuario obtenerPreguntas.
-	self assert:  list size equals: 1 
-]
-
-{ #category : #test }
-UsuarioTest >> testObtenerRespuestas [
-	| list |
-	list := usuario obtenerRespuestas.
 	self assert:  list size equals: 1 
 ]
 

@@ -27,31 +27,14 @@ Usuario >> agregarPregunta: unaPregunta [
 ]
 
 { #category : #methods }
-Usuario >> agregarRespuesta: unaRespuesta [
-	posts add: unaRespuesta
-]
-
-{ #category : #methods }
 Usuario >> agregarTopicoInteres: unTopico [
 	(self topicosDeInteres includes: unTopico)
 		ifFalse: [ topicosDeInteres add: unTopico ]
 ]
 
 { #category : #methods }
-Usuario >> calcularPuntaje [
-	^ self cantidadPreguntas * 20 + (self obtenerMisRespuestas size * 50)
-		+ self diferenciaLikeDislikesPreguntas
-		+ self diferenciaLikeDislikesRespuestas
-]
-
-{ #category : #methods }
 Usuario >> cantidadPreguntas [
 	^ self obtenerPreguntas size
-]
-
-{ #category : #methods }
-Usuario >> cantidadRespuestas [
-	^ self obtenerRespuestas size
 ]
 
 { #category : #accessing }
@@ -80,14 +63,6 @@ Usuario >> diferenciaLikeDislikesPreguntas [
 	preguntas := self obtenerPreguntas.
 	preguntas ifNotEmpty:  [ ^ preguntas sum: [ :pregunta | pregunta diferenciaLikesDislikes ] ] ifEmpty: [^0]
 	
-]
-
-{ #category : #methods }
-Usuario >> diferenciaLikeDislikesRespuestas [
-	| respuestas |
-	respuestas := self obtenerRespuestas.
-	respuestas ifNotEmpty: [ ^ respuestas sum: [ :respuesta | respuesta diferenciaLikesDislikes ] ]
-				ifEmpty: [ ^ 0 ]
 ]
 
 { #category : #methods }
@@ -126,29 +101,8 @@ Usuario >> nombreUsuario: unNombreUsuario contrasenia: unaContrasenia [
 ]
 
 { #category : #methods }
-Usuario >> obtenerMisRespuestas [
-	| misRespuestas misRepuestasAMisPreguntas |
-	"Obtengo todas mis repuestas"
-	misRespuestas := self obtenerRespuestas.
-	"Obtengo todas mis resuestas a mis preguntas"
-	misRepuestasAMisPreguntas := self obtenerPreguntas
-		do: [ :p | p respuestas select: [ :rta | rta usuario equals: self ] ].
-	"Elimina las respuestas repetidas en ambas colecciones"
-	misRepuestasAMisPreguntas
-		do: [ :miRta | 
-			(misRespuestas includes: miRta)
-				ifTrue: [ misRespuestas remove: miRta ] ].
-	 ^ misRespuestas 
-]
-
-{ #category : #methods }
 Usuario >> obtenerPreguntas [
 	^ posts select: [ :pregunta | pregunta soyPregunta ]
-]
-
-{ #category : #methods }
-Usuario >> obtenerRespuestas [
-	^ posts select: [ :pregunta | pregunta soyPregunta not ]
 ]
 
 { #category : #accessing }
