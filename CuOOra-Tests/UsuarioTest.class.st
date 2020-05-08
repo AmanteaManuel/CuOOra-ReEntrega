@@ -6,6 +6,7 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'usuario',
+		'usuario2',
 		'top'
 	],
 	#category : #'CuOOra-Tests'
@@ -20,7 +21,6 @@ UsuarioTest >> setUp [
 	u1 := Usuario newNombreUsuario: 'user' contrasenia: '123'.
 	u2 := Usuario newNombreUsuario: 'user2' contrasenia: '123'.
 	u3 := Usuario newNombreUsuario: 'user3' contrasenia: '123'.
-	"u4 := Usuario newNombreUsuario: 'user4' contrasenia: '123'."
 	u1 agregarTopicoInteres: t.
 	top := t.
 	"---------------------------------------------------------"
@@ -36,8 +36,9 @@ UsuarioTest >> setUp [
 	p darDislike: u3.
 	r darDislike: u3.
 	u1 agregarPregunta: p.
-	u1 agregarPregunta: r.
-	usuario := u1
+	u1 agregarRespuesta: r.
+	usuario := u1.
+	usuario2 := u3.
 ]
 
 { #category : #test }
@@ -77,45 +78,33 @@ UsuarioTest >> testAgregarTopicoInteres [
 
 { #category : #test }
 UsuarioTest >> testCalcularPuntaje [
-	| u1 u2 u3 u4 p1 p2 p3 r |
-	u1 := Usuario
-		newNombreUsuario: 'usuarioSinPregNiResp'
-		contrasenia: 'xxxx'.
-	u2 := Usuario
-		newNombreUsuario: 'usuarioConUnaPreg'
-		contrasenia: 'xxxx'.
-	u3 := Usuario
-		newNombreUsuario: 'usuarioConUnaPregUnaResp'
-		contrasenia: 'xxxx'.
+	| u3 u4 p1 p2 r |
+	u3 := Usuario newNombreUsuario: 'conUnaPregunta' contrasenia: '123'.
 	u4 := Usuario
-		newNombreUsuario: 'usuarioPregRespLike'
-		contrasenia: 'xxxx'.
+		newNombreUsuario: 'conUnaPreguntaUnaRespuesta'
+		contrasenia: '123'.
 	p1 := Pregunta
-		newPregunta: 'xxxx'
-		descripcion: 'xxxx'
-		topicos: 'xxxx'
-		usuario: u2.
-	p2 := Pregunta
-		newPregunta: 'xxxx'
-		descripcion: 'xxxx'
-		topicos: 'xxxx'
+		newPregunta: 'prueba1'
+		descripcion: 'prueba1'
+		topicos: ''
 		usuario: u3.
-	p3 := Pregunta
-		newPregunta: 'xxxx'
-		descripcion: 'xxxx'
-		topicos: 'xxxx'
+	p2 := Pregunta
+		newPregunta: 'prueba2'
+		descripcion: 'prueba2'
+		topicos: ''
 		usuario: u4.
-	r := Respuesta newRespuesta: 'xxxx' usuario: u2.
-	u2 agregarPregunta: p1.
-	u3 agregarPregunta: p2.
-	u3 agregarRespuesta: r.
-	u4 agregarPregunta: p3.
+	r := Respuesta newRespuesta: 'prueba' usuario: u4.
+	u3 agregarPregunta: p1.
+	u4 agregarPregunta: p2.
 	u4 agregarRespuesta: r.
-	u1 darLike: p3.
-	"self assert: u1 calcularPuntaje equals: 0."
-"	self assert: u2 calcularPuntaje equals: 20."
-	self assert: u3 calcularPuntaje equals: 70.
-	self assert: u4 calcularPuntaje equals: 71
+		"usuario2 no tiene preguntas ni respuestas.Puntaje: 0"
+	self assert: usuario2 calcularPuntaje equals: 0.
+		"u3 tiene una pregunta. Puntaje: 20"
+	self assert: u3 calcularPuntaje equals: 20.
+		"usuario tiene una pregunta, una respuesta, un like y dos dislikes. Puntaje: 69 "
+	self assert: usuario calcularPuntaje equals: 69.
+		"u4 tiene una pregunta y una respuesta. Puntaje: 70."
+	self assert: u4 calcularPuntaje equals: 70
 ]
 
 { #category : #test }

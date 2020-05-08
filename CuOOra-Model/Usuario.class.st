@@ -46,7 +46,7 @@ Usuario >> calcularPuntaje [
 
 { #category : #methods }
 Usuario >> cantidadPreguntas [
-	^(self obtenerRespuestas size)
+	^ self obtenerPreguntas size
 ]
 
 { #category : #methods }
@@ -78,14 +78,16 @@ Usuario >> darLike: unPost [
 Usuario >> diferenciaLikeDislikesPreguntas [
 	| preguntas |
 	preguntas := self obtenerPreguntas.
-	^ preguntas sum: [ :pregunta | pregunta diferenciaLikesDislikes ]
+	preguntas ifNotEmpty:  [ ^ preguntas sum: [ :pregunta | pregunta diferenciaLikesDislikes ] ] ifEmpty: [^0]
+	
 ]
 
 { #category : #methods }
 Usuario >> diferenciaLikeDislikesRespuestas [
 	| respuestas |
 	respuestas := self obtenerRespuestas.
-	^ respuestas sum: [ :respuesta | respuesta diferenciaLikesDislikes ]
+	respuestas ifNotEmpty: [ ^ respuestas sum: [ :respuesta | respuesta diferenciaLikesDislikes ] ]
+				ifEmpty: [ ^ 0 ]
 ]
 
 { #category : #methods }
@@ -130,14 +132,13 @@ Usuario >> obtenerMisRespuestas [
 	misRespuestas := self obtenerRespuestas.
 	"Obtengo todas mis resuestas a mis preguntas"
 	misRepuestasAMisPreguntas := self obtenerPreguntas
-		do:
-			[ :p | p respuestas select: [ :rta | rta usuario equals: self ] ].
+		do: [ :p | p respuestas select: [ :rta | rta usuario equals: self ] ].
 	"Elimina las respuestas repetidas en ambas colecciones"
 	misRepuestasAMisPreguntas
 		do: [ :miRta | 
 			(misRespuestas includes: miRta)
 				ifTrue: [ misRespuestas remove: miRta ] ].
-	^ misRespuestas
+	 ^ misRespuestas 
 ]
 
 { #category : #methods }
